@@ -5,13 +5,15 @@ import json
 import pymongo
 from dotenv import load_dotenv
 from sqlmodel import Session, SQLModel, create_engine
-from models import Products
+from models import Products, Families, FamilyMembers, VisitEvents
 
 load_dotenv()
 
 orm_classes = {
-    "products": Products
-    # "families": Families
+    "products": Products,
+    "families": Families,
+    "family_members": FamilyMembers,
+    "visit_events": VisitEvents,
 }
 
 
@@ -47,8 +49,10 @@ def load(table_name: str):
 
 if __name__ == "__main__":
     tables_to_extract = [
-        "products"
-        # "families"
+        "products",
+        "families",
+        "family_members",
+        "visit_events"
     ]
     for t in tables_to_extract:
         print(f"extracting table: {t}")
