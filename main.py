@@ -15,7 +15,7 @@ orm_classes = {
 }
 
 
-def extract(table_name: str = "products"):
+def extract(table_name: str):
     """Extract data from MongoDB to local JSONLine file.
 
     Ref: https://realpython.com/introduction-to-mongodb-and-python/
@@ -28,19 +28,21 @@ def extract(table_name: str = "products"):
         fh.writelines([dumps(doc) + "\n" for doc in table.find()])
 
 
-def load(table_name: str = "products"):
+def load(table_name: str):
     """Load data from local JSONLine file to PostgresSQL."""
     engine = create_engine(os.environ.get("POSTGRES_DB"))
+    Class = orm_classes[table_name]
+    Class.__table__.drop(engine, checkfirst=True) # drop the table if existing
     SQLModel.metadata.create_all(engine)
 
     with open(f"data/{table_name}.jsonl", "r") as fh:
-        Class = orm_classes[table_name]
         objects = [Class(id=i, **json.loads(p)) for i, p in enumerate(fh.readlines())]
 
     # TODO: instead of writing all objects, only do an incremental write
     with Session(engine) as session:
         session.add_all(objects)
         session.commit()
+        session.close()
 
 
 if __name__ == "__main__":

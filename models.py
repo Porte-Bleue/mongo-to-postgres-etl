@@ -11,7 +11,7 @@ def to_camel(name):
 
 
 class Products(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: str = Field(default=None, primary_key=True, alias='_id')
     name: str
     unit_of_measure: str
     quantity_for_one_foodstuff: int
@@ -23,7 +23,7 @@ class Products(SQLModel, table=True):
     updated_by: str
     current_stock: int
 
-    @validator("created_by", "category", "cupboard", "updated_by", pre=True)
+    @validator("id", "created_by", "category", "cupboard", "updated_by", pre=True)
     def unnest_id(cls, v):
         return v["$oid"]
 
