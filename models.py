@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import validator
 from sqlalchemy import Column
 from sqlmodel import Field, SQLModel, JSON
@@ -38,7 +38,7 @@ class Products(SQLModel, table=True):
 
 class Families(SQLModel, table=True):
     family_id: str = Field(default=None, primary_key=True, alias='_id')
-    # family_member_id: dict = Field(sa_column=Column(JSON))
+    family_members: List[str]
     name: str
     city: str
     housing_details: Optional[str]
@@ -52,6 +52,10 @@ class Families(SQLModel, table=True):
     @validator("family_id", pre=True)
     def unnest_id(cls, v):
         return v["$oid"]
+
+    @validator("family_members", pre=True)
+    def unnest_family_members(cls, v):
+        return [fm["$oid"] for fm in v]
 
     @validator("created_at", "updated_at", "last_visit_at", pre=True)
     def unnest_date(cls, v):
@@ -108,5 +112,3 @@ class VisitEvents(SQLModel, table=True):
         allow_population_by_field_name = True
 
 # class Categories
-
-
