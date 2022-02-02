@@ -5,17 +5,19 @@ import json
 import pymongo
 from dotenv import load_dotenv
 from sqlmodel import Session, SQLModel, create_engine
-from models import Products, Families, FamilyMembers, VisitEvents
+# from models import Products, Families, FamilyMembers, VisitEvents
+from models import Families, FamilyMembers
 
 load_dotenv()
 
 orm_classes = {
-    "products": Products,
-    "families": Families,
+    # "products": Products,
     "family_members": FamilyMembers,
-    "visit_events": VisitEvents,
+    "families": Families,
+    # "visit_events": VisitEvents,
 }
 
+engine = create_engine(os.environ.get("POSTGRES_DB"))
 
 def extract(table_name: str):
     """Extract data from MongoDB to local JSONLine file.
@@ -32,30 +34,29 @@ def extract(table_name: str):
 
 def load(table_name: str):
     """Load data from local JSONLine file to PostgresSQL."""
-    engine = create_engine(os.environ.get("POSTGRES_DB"))
     Class = orm_classes[table_name]
-    Class.__table__.drop(engine, checkfirst=True) # drop the table if existing
+    # Class.__table__.drop(engine, checkfirst=True) # drop the table if existing
     SQLModel.metadata.create_all(engine)
 
     with open(f"data/{table_name}.jsonl", "r") as fh:
         objects = [Class(id=i, **json.loads(p)) for i, p in enumerate(fh.readlines())]
 
     # TODO: instead of writing all objects, only do an incremental write
-    with Session(engine) as session:
-        session.add_all(objects)
-        session.commit()
-        session.close()
+    session.add_all(objects)
 
 
 if __name__ == "__main__":
     tables_to_extract = [
-        "products",
-        "families",
+        # "products",
         "family_members",
-        "visit_events"
+        "families",
+        # "visit_events"
     ]
-    for t in tables_to_extract:
-        print(f"extracting table: {t}")
-        extract(table_name=t)
-        print(f"loading table: {t}")
-        load(table_name=t)
+    with Session(engine) as session:
+        for t in tables_to_extract:
+            print(f"extracting table: {t}")
+            extract(table_name=t)
+            print(f"loading table: {t}")
+            load(table_name=t)
+        session.commit()
+        session.close()
