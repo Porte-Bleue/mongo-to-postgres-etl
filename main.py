@@ -5,7 +5,7 @@ import json
 import pymongo
 from dotenv import load_dotenv
 from sqlmodel import Session, SQLModel, create_engine
-from models import Products, Families, FamilyMembers, VisitEvents
+from models import Products, Families, FamilyMembers, VisitEvents, Operations
 
 load_dotenv()
 
@@ -14,6 +14,7 @@ orm_classes = {
     "families": Families,
     "family_members": FamilyMembers,
     "visit_events": VisitEvents,
+    # "operations": Operations, ## The table is too heavy
 }
 
 
@@ -52,7 +53,8 @@ if __name__ == "__main__":
         "products",
         "families",
         "family_members",
-        "visit_events"
+        "visit_events",
+        # "operations" ## The table is too heavy
     ]
     for t in tables_to_extract:
         print(f"extracting table: {t}")
