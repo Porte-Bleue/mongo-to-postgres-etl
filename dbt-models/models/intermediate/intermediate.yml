@@ -1,0 +1,27 @@
+---
+version: 2
+
+models:
+  - name: stg_family__family_members_combinations
+    description: One to many model between family and family members
+    columns:
+      - name: family_member_id
+        description: The unique identifier for a family member
+        tests:
+          - unique
+          - not_null
+      - name: family_id
+        description: The unique identifier for a family
+      - name: family_name
+        description: The family name
+
+  - name: stg_visits_events__operations_combinations
+    description: One to many model between visit and operations
+    columns:
+      - name: operation_id
+        description: The unique identifier for an operation
+        tests:
+          - unique
+          - not_null
+      - name: visit_id
+        description: The unique identifier for a family visit 
