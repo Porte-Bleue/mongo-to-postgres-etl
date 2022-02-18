@@ -1,0 +1,17 @@
+
+version: 2
+
+sources:
+  - name: public
+    schema: public
+
+    tables:
+      - name: products
+      - name: families
+      - name: family_members
+      - name: visit_events
+
+models:
+  - name: stg_products
+    description: xxx
+
