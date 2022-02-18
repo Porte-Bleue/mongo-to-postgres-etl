@@ -140,7 +140,7 @@ models:
           - unique
           - not_null
       - name: operation_ids
-        description: Array of IDs of each family member
+        description: Array of IDs of each operation performed during the visit
         tests:
           - not_null
       - name: family_id
