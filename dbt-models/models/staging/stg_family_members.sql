@@ -8,9 +8,9 @@ renamed as (
 
     select
         family_member_id,
+        nullif(surname, '') as surname,
         gender,
         adult_or_child,
-        surname,
         cast(to_date(birth_date, 'DD/MM/YYYY') as date) as birth_date,
         created_at,
         created_at::date as creation_date,

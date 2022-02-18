@@ -6,12 +6,152 @@ sources:
     schema: public
 
     tables:
-      - name: products
       - name: families
       - name: family_members
+      - name: products
       - name: visit_events
 
 models:
-  - name: stg_products
-    description: xxx
+  - name: stg_families
+    columns:
+      - name: family_id
+        description: The unique identifier for a family
+        tests:
+          - unique
+          - not_null
+      - name: family_name
+        description: The family name
+        tests:
+          - not_null
+      - name: family_members_ids
+        description: Array of IDs of each family member
+        tests: 
+          - not_null
+      - name: city
+        description: The city name
+        tests:
+          - not_null
+      - name: created_at
+        description: Timestamp when the family was created
+        tests:
+          - not_null
+      - name: creation_date
+        description: The date when the family was created
+        tests:
+          - not_null
+      - name: updated_at
+        description: Timestamp when the family was updated
+        tests:
+          - not_null
+      - name: update_date
+        description: The date when the family was updated
+        tests:
+          - not_null
+      - name: last_visit_at
+        description: Timestamp when the family last visited
+        tests:
+          - not_null
+      - name: last_visit_date
+        description: The date when the family last visited
+        tests:
+          - not_null
 
+  - name: stg_family_members
+    columns:
+      - name: family_member_id
+        description: The unique identifier for a family member
+        tests:
+          - unique
+          - not_null
+      - name: gender
+        description: The gender of the family member
+        tests:
+          - not_null
+      - name: adult_or_child
+        description: whether the family member is an adult or a child
+        tests: 
+          - not_null
+      - name: birth_date
+        description: The birth date of the family member
+        tests:
+          - not_null
+      - name: created_at
+        description: The date when the family member was created
+        tests:
+          - not_null
+      - name: creation_date
+        description: The date when the family member was created
+        tests:
+          - not_null
+      - name: updated_at
+        description: Timestamp when the family member was updated
+        tests:
+          - not_null
+      - name: update_date
+        description: The date when the family member was updated
+        tests:
+          - not_null
+
+  - name: stg_products
+    columns:
+      - name: product_id
+        description: The unique identifier for a product
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: The name of the product
+        tests:
+          - not_null
+      - name: units_per_batch
+        description: Number of units of product given per batch
+        tests:
+          - not_null
+      - name: created_at
+        description: Timestamp when the product was created
+        tests:
+          - not_null
+      - name: creation_date
+        description: The date when the product was created
+        tests:
+          - not_null
+      - name: updated_at
+        description: Timestamp when the product was updated
+        tests:
+          - not_null
+      - name: update_date
+        description: The date when the product was updated
+        tests:
+          - not_null
+      - name: category_id
+        description: The identifier of the category to which the product belongs to
+        tests:
+          - not_null
+      - name: current_stock
+        description: The current stock of the product
+        tests:
+          - not_null
+
+  - name: stg_visit_events
+    columns:
+      - name: visit_id
+        description: The unique identifier for a family visit 
+        tests:
+          - unique
+          - not_null
+      - name: operation_ids
+        description: Array of IDs of each family member
+        tests:
+          - not_null
+      - name: family_id
+        description: The unique identifier for a family
+        tests:
+          - not_null
+      - name: visit_at
+        description: Timestamp when the family visited
+        tests:
+          - not_null
+      - name: visit_date
+        description: The date when the family visited
+        tests:
+          - not_null

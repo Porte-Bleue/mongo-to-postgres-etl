@@ -21,4 +21,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   la_porte_bleue:
-    +materialized: view
+      +materialized: view
+      staging:
+        +materialized: view
