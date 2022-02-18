@@ -75,7 +75,7 @@ class FamilyMembers(SQLModel, table=True):
     gender: str
     adult_or_child: Optional[str]
     surname: Optional[str]
-    birth_date: Optional[datetime] = Field(alias='birthday')
+    birth_date: Optional[str] = Field(alias='birthday')
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
 
@@ -83,7 +83,7 @@ class FamilyMembers(SQLModel, table=True):
     def unnest_id(cls, v):
         return v["$oid"]
 
-    @validator("created_at", "updated_at", "birth_date", pre=True)
+    @validator("created_at", "updated_at", pre=True)
     def unnest_date(cls, v):
         return v["$date"]
 
