@@ -63,6 +63,10 @@ models:
         tests:
           - unique
           - not_null
+      - name: first_name
+        description: The first name of the family member
+        tests:
+          - not_null
       - name: gender
         description: The gender of the family member
         tests:

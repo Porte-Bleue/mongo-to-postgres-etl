@@ -2,7 +2,7 @@
 version: 2
 
 models:
-  - name: stg_family__family_members_combinations
+  - name: stg_families__family_members_combinations
     description: One to many model between family and family members
     columns:
       - name: family_member_id
