@@ -3,9 +3,10 @@ from bson.json_util import dumps
 import json
 
 import pymongo
+import sqlalchemy
 from dotenv import load_dotenv
 from sqlmodel import Session, SQLModel, create_engine
-from models import Products, Families, FamilyMembers, VisitEvents
+from models import Products, Families, FamilyMembers, VisitEvents, Operations
 
 load_dotenv()
 
@@ -14,6 +15,7 @@ orm_classes = {
     "families": Families,
     "family_members": FamilyMembers,
     "visit_events": VisitEvents,
+    # "operations": Operations, ## The table is too heavy
 }
 
 
@@ -34,7 +36,10 @@ def load(table_name: str):
     """Load data from local JSONLine file to PostgresSQL."""
     engine = create_engine(os.environ.get("POSTGRES_DB"))
     Class = orm_classes[table_name]
-    Class.__table__.drop(engine, checkfirst=True) # drop the table if existing
+    connection = engine.connect()
+    sql_query = sqlalchemy.text(f"drop table if exists {table_name} cascade;")
+    connection.execute(sql_query)
+    connection.commit()
     SQLModel.metadata.create_all(engine)
 
     with open(f"data/{table_name}.jsonl", "r") as fh:
@@ -52,7 +57,8 @@ if __name__ == "__main__":
         "products",
         "families",
         "family_members",
-        "visit_events"
+        "visit_events",
+        # "operations" ## The table is too heavy
     ]
     for t in tables_to_extract:
         print(f"extracting table: {t}")
