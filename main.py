@@ -1,6 +1,7 @@
 import os
 from bson.json_util import dumps
 import json
+from datetime import datetime, timedelta
 
 import pymongo
 import sqlalchemy
@@ -15,7 +16,7 @@ orm_classes = {
     "families": Families,
     "family_members": FamilyMembers,
     "visit_events": VisitEvents,
-    # "operations": Operations, ## The table is too heavy
+    "operations": Operations, 
 }
 
 
@@ -27,9 +28,11 @@ def extract(table_name: str):
     client = pymongo.MongoClient(os.environ.get("MONGO_DB"))
     db = client.porteBleue  # use porteBleue
     table = db[table_name]  # db.getCollection("products")
-
     with open(f"data/{table_name}.jsonl", "w") as fh:
-        fh.writelines([dumps(doc) + "\n" for doc in table.find()])
+        if table_name == 'operations':
+            fh.writelines([dumps(doc) + "\n" for doc in table.find({"createdAt":{"$gte":datetime.today() - timedelta(7)}})]) # Limit the extract to last 7 days of  for operations table
+        else:
+            fh.writelines([dumps(doc) + "\n" for doc in table.find()])
 
 
 def load(table_name: str):
@@ -58,7 +61,7 @@ if __name__ == "__main__":
         "families",
         "family_members",
         "visit_events",
-        # "operations" ## The table is too heavy
+        "operations"
     ]
     for t in tables_to_extract:
         print(f"extracting table: {t}")
