@@ -28,9 +28,18 @@ models:
         tests: 
           - not_null
       - name: city
-        description: The city name
+        description: the city of residence of the family
         tests:
           - not_null
+      - name: housing_details
+        description: Information on the family's residence (if any)
+        tests:
+            - accepted_values:
+                values: 
+                  ['Propre Logement',
+                   'SDF',
+                   'Hôtel du 115',
+                   'Autres']
       - name: created_at
         description: Timestamp when the family was created
         tests:

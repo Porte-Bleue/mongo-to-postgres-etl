@@ -9,9 +9,9 @@ renamed as (
     select
         family_id,
         name as family_name,
-        family_members_ids,
-        city,
-        housing_details,
+        family_members_ids::varchar[] as family_members_ids,
+        nullif(city, '') as city,
+        nullif(housing_details, '') as housing_details,
         created_at,
         created_at::date as creation_date,
         updated_at,
