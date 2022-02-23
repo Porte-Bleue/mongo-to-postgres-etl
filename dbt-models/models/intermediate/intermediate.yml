@@ -22,4 +22,33 @@ models:
           - unique
           - not_null
       - name: visit_id
+        description: The unique identifier for a family visit
+
+  - name: stg_operations__product_operations
+    description: >
+      Incremental model that aggregates operations data to a product-level
+      staging level on a daily basis.
+    columns:
+      - name: product_operations_id
+        description: The unique identifier for this table
+        tests:
+          - unique
+          - not_null
+      - name: date_at
+        description: The date when the operation occurred
+      - name: product_id
+        description: The unique identifier for a product
+      - name: product_name
+        description: The name of the product
+      - name: unit_of_measure
+        description: >
+          Unit of measure for a given product
+          eg: 'Paquet' for 'Biscuits'
+      - name: visit_id
         description: The unique identifier for a family visit 
+      - name: operation_type
+        description: The type of stock operation, either `in` or `out`
+      - name: flow_type
+        description: The type of flow 
+      - name: quantity
+        description: The quantity of product units associated with the operation 
