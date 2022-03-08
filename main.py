@@ -1,6 +1,7 @@
 import os
 from bson.json_util import dumps
 import json
+from datetime import datetime, timedelta
 
 import pymongo
 import sqlalchemy
@@ -15,21 +16,24 @@ orm_classes = {
     "families": Families,
     "family_members": FamilyMembers,
     "visit_events": VisitEvents,
-    # "operations": Operations, ## The table is too heavy
+    "operations": Operations, 
 }
 
 
-def extract(table_name: str):
+def extract(collection_name: str):
     """Extract data from MongoDB to local JSONLine file.
 
     Ref: https://realpython.com/introduction-to-mongodb-and-python/
     """
     client = pymongo.MongoClient(os.environ.get("MONGO_DB"))
     db = client.porteBleue  # use porteBleue
-    table = db[table_name]  # db.getCollection("products")
+    collection = db[collection_name]  # db.getCollection("products")
 
-    with open(f"data/{table_name}.jsonl", "w") as fh:
-        fh.writelines([dumps(doc) + "\n" for doc in table.find()])
+    with open(f"data/{collection_name}.jsonl", "w") as fh:
+        if collection_name == 'operations':
+            fh.writelines([dumps(doc) + "\n" for doc in collection.find({"createdAt":{"$gte":datetime.today() - timedelta(7)}})]) # Limit the extract to last 7 days from the `operations` collection
+        else:
+            fh.writelines([dumps(doc) + "\n" for doc in collection.find()])
 
 
 def load(table_name: str):
@@ -58,10 +62,10 @@ if __name__ == "__main__":
         "families",
         "family_members",
         "visit_events",
-        # "operations" ## The table is too heavy
+        "operations"
     ]
     for t in tables_to_extract:
-        print(f"extracting table: {t}")
-        extract(table_name=t)
+        print(f"extracting collection: {t}")
+        extract(collection_name=t)
         print(f"loading table: {t}")
         load(table_name=t)
