@@ -14,6 +14,4 @@ unnest_family_members as (
 
 )
 
-select
-    *
-from unnest_family_members
+select * from unnest_family_members

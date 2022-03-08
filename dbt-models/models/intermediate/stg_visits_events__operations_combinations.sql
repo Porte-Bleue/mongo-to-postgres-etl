@@ -13,6 +13,4 @@ unnest_operations as (
 
 )
 
-select
-    *
-from unnest_operations
+select * from unnest_operations

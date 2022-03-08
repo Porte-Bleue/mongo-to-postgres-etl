@@ -8,7 +8,7 @@ renamed as (
 
     select
         family_member_id,
-        nullif(surname, '') as surname,
+        nullif(surname, '') as first_name,
         gender,
         adult_or_child,
         cast(to_date(birth_date, 'DD/MM/YYYY') as date) as birth_date,
@@ -20,6 +20,4 @@ renamed as (
 
 )
 
-select
-    *
-from renamed
+select * from renamed

@@ -1,0 +1,32 @@
+
+version: 2
+
+models:
+  - name: dim_family_members
+    description: This dimension model contains basic information about a family member as well as the family to which he/she belong to.
+    columns:
+      - name: family_member_id
+        description: The unique identifier for a family member
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: The first name of the family member
+      - name: family_id
+        description: The unique identifier for a family
+        tests:
+          - not_null
+      - name: family_name
+        description: The family name
+        tests:
+          - not_null
+      - name: gender
+        description: The gender of the family member
+      - name: adult_or_child
+        description: whether the family member is an adult or a child
+      - name: birth_date
+        description: The birth date of the family member
+      - name: creation_date
+        description: The date when the family member was created
+      - name: update_date
+        description: The date when the family member was updated
