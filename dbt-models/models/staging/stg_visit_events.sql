@@ -8,7 +8,7 @@ renamed as (
 
     select
         visit_id,
-        operation_ids,
+        operation_ids::varchar[] as operation_ids,
         family_id,
         created_at as visit_at,
         created_at::date as visit_date

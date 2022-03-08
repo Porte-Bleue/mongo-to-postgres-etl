@@ -8,8 +8,7 @@ unnest_family_members as (
 
     select
         family_id,
-        family_name,
-        unnest(family_members_ids::varchar[]) as family_member_id
+        unnest(family_members_ids) as family_member_id
     from families
 
 )

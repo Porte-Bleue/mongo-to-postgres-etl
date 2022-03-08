@@ -2,8 +2,90 @@
 version: 2
 
 models:
+  - name: stg_families__visit_events
+    description: One to many relationship model between a family and visit events
+    columns:
+      - name: visit_id
+        description: The unique identifier for a family visit 
+      - name: visit_date
+        description: The date when the family visited 
+      - name: family_id
+        description: The unique identifier for a family
+      - name: family_name
+        description: The family name
+      - name: city
+        description: The city of residence of the family
+      - name: housing_details
+        description: Information on the family's residence (if any)
+      - name: is_latest_visit
+        description: Whether the visit event is the latest or not
+      - name: is_first_visit
+        description: Whether the visit event is the family's very first visit
+      - name: family_type
+        description: Whether the family is new or returning
+      - name: number_of_operations
+        description: the number of operations executed during the visit
+
+  - name: dim_families
+    description: This dimension model contains basic information about a family
+    columns:
+      - name: family_id
+        description: The unique identifier for a family
+        tests:
+          - unique
+      - name: family_name
+        description: The family name
+      - name: number_of_family_members
+        description: The number of family members
+        tests:
+          - not_null
+      - name: city
+        description: the city of residence of the family
+      - name: housing_details
+        description: Information on the family's residence (if any)
+      - name: creation_date
+        description: The date when the family member was created
+      - name: update_date
+        description: The date when the family member was updated
+      - name: first_visit_date
+        description: The date when the family first visited
+      - name: last_visit_date
+        description: The date when the family last visited
+      - name: lifetime_visit_count
+        description: The total number of visits by the family since they first visited
+      - name: lifetime_operation_count
+        description: The total number of operations executed for the family across all visits
+
+  - name: stg_family_members__visit_events
+    description: Many to many relationships between visit events and family members
+    columns:
+      - name: visit_id
+        description: The unique identifier for a family visit 
+      - name: visit_date
+        description: The date when the family visited
+      - name: family_id
+        description: The unique identifier for a family
+      - name: family_name
+        description: The family name
+      - name: city
+        description: the city of residence of the family member
+      - name: family_member_id
+        description: The unique identifier for a family member
+      - name: first_name
+        description: The first name of the family member
+      - name: gender
+        description: The gender of the family member
+      - name: adult_or_child
+        description: whether the family member is an adult or a child
+      - name: birth_date
+        description: The birth date of the family member
+      - name: is_first_visit
+        description: Whether the visit event is the very first visit or not
+      - name: is_latest_visit
+        description: Whether the visit event is the latest or not
+
   - name: dim_family_members
-    description: This dimension model contains basic information about a family member as well as the family to which he/she belong to.
+    description: This dimension model contains basic information about a family member
     columns:
       - name: family_member_id
         description: The unique identifier for a family member
@@ -20,6 +102,10 @@ models:
         description: The family name
         tests:
           - not_null
+      - name: city
+        description: the city of residence of the family
+        tests:
+          - not_null
       - name: gender
         description: The gender of the family member
       - name: adult_or_child
@@ -30,3 +116,9 @@ models:
         description: The date when the family member was created
       - name: update_date
         description: The date when the family member was updated
+      - name: first_visit_date
+        description: The date when the member's family first visited
+      - name: last_visit_date
+        description: The date when the member's family last visited
+      - name: lifetime_visit_count
+        description: The total number of visits of the member's family since they first visited
