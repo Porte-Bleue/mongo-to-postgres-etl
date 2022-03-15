@@ -20,3 +20,10 @@ exposures:
       as well as the volume of donations.
     type: dashboard
     maturity: high
+    owner:
+      name: Marie Lestavel
+      email: marielestavel@gmail.com
+
+    depends_on:
+      - ref('viz_food_bank_report__families__quarterly')
+      - ref('viz_food_bank_report__family_members__quarterly')
