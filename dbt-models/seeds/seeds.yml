@@ -1,0 +1,10 @@
+---
+version: 2
+
+seeds:
+  - name: seed_collection_dates
+    description: >
+      This table contains the dates of past and future product collections
+    columns:
+      - name: date_at
+        description: Date of the collection
