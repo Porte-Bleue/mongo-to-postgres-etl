@@ -122,3 +122,17 @@ models:
         description: The date when the member's family last visited
       - name: lifetime_visit_count
         description: The total number of visits of the member's family since they first visited
+
+  - name: viz_operations__stock_entries_collection_dates
+    description: Model containing stock entries by product on collection days
+    columns:
+      - name: date_at
+        description: The date when the operation occurred
+      - name: product_name
+        description: The name of the product
+      - name: unit_of_measure
+        description: >
+          Unit of measure for a given product
+          eg: 'Paquet' for 'Biscuits'
+      - name: quantity
+        description: The quantity of product units associated with the operation 

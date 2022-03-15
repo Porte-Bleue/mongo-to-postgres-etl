@@ -10,6 +10,7 @@ sources:
       - name: family_members
       - name: products
       - name: visit_events
+      - name: operations
 
 models:
   - name: stg_families
@@ -116,6 +117,12 @@ models:
         description: The name of the product
         tests:
           - not_null
+      - name: unit_of_measure
+        description: >
+          Unit of measure for a given product
+          eg: 'Paquet' for 'Biscuits'
+        tests:
+          - not_null
       - name: units_per_batch
         description: Number of units of product given per batch
         tests:
@@ -166,5 +173,47 @@ models:
           - not_null
       - name: visit_date
         description: The date when the family visited
+        tests:
+          - not_null
+
+  - name: stg_operations
+    columns:
+      - name: operation_id
+        description: The unique identifier for an operation
+        tests:
+          - unique
+          - not_null
+      - name: operation_type
+        description: The type of stock operation, either `in` or `out`
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['in', 'out']
+      - name: quantity
+        description: The quantity of product units associated with the operation 
+        tests:
+          - not_null
+      - name: product_id
+        description: The unique identifier for a product
+        tests:
+          - not_null
+      - name: flow_type
+        description: The type of flow 
+        tests:
+          - not_null
+      - name: created_at
+        description: Timestamp when the operation was created
+        tests:
+          - not_null
+      - name: creation_date
+        description: The date when the operation was created
+        tests:
+          - not_null
+      - name: updated_at
+        description: Timestamp when the product was updated
+        tests:
+          - not_null
+      - name: update_date
+        description: The date when the product was updated
         tests:
           - not_null
