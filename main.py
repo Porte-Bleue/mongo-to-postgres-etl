@@ -7,6 +7,9 @@ import pymongo
 import sqlalchemy
 from dotenv import load_dotenv
 from sqlmodel import Session, SQLModel, create_engine
+import prefect
+from prefect import task, Flow
+from prefect.client.secrets import Secret
 from models import Products, Families, FamilyMembers, VisitEvents, Operations
 
 load_dotenv()
@@ -19,13 +22,17 @@ orm_classes = {
     "operations": Operations, 
 }
 
+logger = prefect.context.get("logger")
 
+@task
 def extract(collection_name: str):
     """Extract data from MongoDB to local JSONLine file.
 
     Ref: https://realpython.com/introduction-to-mongodb-and-python/
     """
-    client = pymongo.MongoClient(os.environ.get("MONGO_DB"))
+    mongodb_secret = Secret("PREFECT__MONGO_DB")
+    logger.info(mongodb_secret.get())
+    client = pymongo.MongoClient(os.environ.get("PREFECT__MONGO_DB"))
     db = client.porteBleue  # use porteBleue
     collection = db[collection_name]  # db.getCollection("products")
 
@@ -35,10 +42,12 @@ def extract(collection_name: str):
         else:
             fh.writelines([dumps(doc) + "\n" for doc in collection.find()])
 
-
+@task
 def load(table_name: str):
     """Load data from local JSONLine file to PostgresSQL."""
-    engine = create_engine(os.environ.get("POSTGRES_DB"))
+    postgre_secret = Secret("PREFECT__POSTGRES_DB")
+    logger.info(postgre_secret.get())
+    engine = create_engine(os.environ.get("PREFECT__POSTGRES_DB"))
     Class = orm_classes[table_name]
     connection = engine.connect()
     sql_query = sqlalchemy.text(f"drop table if exists {table_name} cascade;")
@@ -64,8 +73,12 @@ if __name__ == "__main__":
         "visit_events",
         "operations"
     ]
-    for t in tables_to_extract:
-        print(f"extracting collection: {t}")
-        extract(collection_name=t)
-        print(f"loading table: {t}")
-        load(table_name=t)
+    with Flow("ETL From MongoDB To Postgres") as flow:
+        for t in tables_to_extract:
+            print(f"extracting collection: {t}")
+            t1 = extract(collection_name=t)
+            print(f"loading table: {t}")
+            t2 = load(table_name=t, upstream_tasks=[t1])
+
+# Deploy Prefect flow
+flow.register(project_name="analytics-la-porte-bleue")
