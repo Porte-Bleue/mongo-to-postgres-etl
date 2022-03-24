@@ -8,7 +8,7 @@ calculate_age as (
 
     select
         *,
-        date_part('year', age('{{ env_var("EXECUTION_DATE") }}', birth_date))::int as age
+        date_part('year', age('{{ env_var("DBT_EXECUTION_DATE") }}', birth_date))::int as age
     from family_members__visit_events
 
 ),
