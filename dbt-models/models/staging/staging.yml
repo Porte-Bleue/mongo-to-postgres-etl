@@ -124,7 +124,7 @@ models:
         tests:
           - not_null
       - name: units_per_batch
-        description: Number of units of product given per batch
+        description: Number of product units given per batch
         tests:
           - not_null
       - name: created_at

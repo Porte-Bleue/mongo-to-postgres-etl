@@ -16,13 +16,15 @@ operations_collection_dates as (
         product_operations.date_at,
         product_operations.product_name,
         product_operations.unit_of_measure,
-        sum(product_operations.quantity) as quantity
+        product_operations.units_per_batch,
+        sum(product_operations.quantity) as unit_entries,
+        sum(product_operations.quantity)/sum(units_per_batch) as batch_quantity
     from product_operations
     inner join collection_dates
         on product_operations.date_at = collection_dates.date_at
     where operation_type = 'in'
     and flow_type = 'inventory'
-    group by 1,2,3
+    group by 1,2,3,4
 
 )
 
