@@ -44,6 +44,9 @@ models:
         description: >
           Unit of measure for a given product
           eg: 'Paquet' for 'Biscuits'
+      - name: units_per_batch
+        description: >
+          Number of product units given per batch
       - name: visit_id
         description: The unique identifier for a family visit 
       - name: operation_type

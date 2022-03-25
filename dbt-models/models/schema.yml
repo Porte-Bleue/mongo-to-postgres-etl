@@ -134,5 +134,12 @@ models:
         description: >
           Unit of measure for a given product
           eg: 'Paquet' for 'Biscuits'
-      - name: quantity
-        description: The quantity of product units associated with the operation 
+      - name: units_per_batch
+        description: Number of product units given per batch
+      - name: unit_entries
+        description: The quantity of product units entered in stock
+      - name: batch_quantity
+        description: > 
+          The corresponding quantity of product units in product batch.
+          Eg: If diapers are given in batches of 10 to families, 
+          then 10 unit entries correspond to 1 product batch stock entry.

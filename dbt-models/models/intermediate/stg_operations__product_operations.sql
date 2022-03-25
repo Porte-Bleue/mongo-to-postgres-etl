@@ -26,13 +26,14 @@ product_aggregate as (
         operations.product_id,
         products.product_name,
         products.unit_of_measure,
+        products.units_per_batch,
         operations.operation_type,
         operations.flow_type,
         sum(operations.quantity) as quantity
     from operations
     inner join products
         on operations.product_id = products.product_id
-    group by 1,2,3,4,5,6
+    group by 1,2,3,4,5,6,7
 
 )
 
