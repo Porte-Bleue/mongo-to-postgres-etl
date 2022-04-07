@@ -18,6 +18,7 @@ family_members_by_quarter as (
     select
         date_trunc('quarter', visit_date)::date as quarter,
         family_id,
+        family_member_id,
         gender,
         case
             when age >= 0 and age <= 3 then '0 to 3'
@@ -26,9 +27,9 @@ family_members_by_quarter as (
             when age >= 26 and age <= 64 then '16 to 64'
             when age >= 65 then '65+'
         end as age_range,
-        count(distinct family_member_id) as number_of_people_helped
+        count(family_member_id) as total_people_helped
     from calculate_age
-    group by 1,2,3,4
+    group by 1,2,3,4,5
 
 ),
 
@@ -38,7 +39,8 @@ grouped as (
         quarter,
         gender,
         age_range,
-        sum(number_of_people_helped) as number_of_people_helped
+        count(family_member_id) as unique_people_helped,
+        sum(total_people_helped) as total_people_helped
     from family_members_by_quarter
     group by 1,2,3
 
