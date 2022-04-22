@@ -7,7 +7,7 @@ with family_members__visit_events as (
 families_by_quarter as (
 
     select
-        date_trunc('quarter', visit_date)::date as quarter,
+        date_trunc('quarter', visit_date)::date as quarter_at,
         family_id,
         count(visit_id) as visit_count
     from family_members__visit_events
@@ -18,7 +18,7 @@ families_by_quarter as (
 grouped as (
 
     select
-        quarter,
+        quarter_at,
         count(family_id) as family_count,
         sum(visit_count) as visit_count
     from families_by_quarter

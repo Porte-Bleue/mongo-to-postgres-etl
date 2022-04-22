@@ -151,6 +151,10 @@ models:
         description: The current stock of the product
         tests:
           - not_null
+      - name: product_weight_kg
+        description: The theoretical average weight of a product unit
+        tests:
+          - not_null
 
   - name: stg_visit_events
     columns:

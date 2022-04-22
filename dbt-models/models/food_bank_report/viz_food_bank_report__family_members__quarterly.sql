@@ -16,7 +16,7 @@ calculate_age as (
 family_members_by_quarter as (
 
     select
-        date_trunc('quarter', visit_date)::date as quarter,
+        date_trunc('quarter', visit_date)::date as quarter_at,
         family_id,
         family_member_id,
         gender,
@@ -36,7 +36,7 @@ family_members_by_quarter as (
 grouped as (
 
     select
-        quarter,
+        quarter_at,
         gender,
         age_range,
         count(family_member_id) as unique_people_helped,

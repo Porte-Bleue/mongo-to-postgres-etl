@@ -16,7 +16,8 @@ renamed as (
         updated_at,
         updated_at::date as update_date,
         category as category_id,
-        current_stock
+        current_stock,
+        nullif(weight_in_kg, 'NaN')::numeric as product_weight_kg
     from source
 
 )

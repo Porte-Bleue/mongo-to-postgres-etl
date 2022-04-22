@@ -17,8 +17,8 @@ operations_collection_dates as (
         product_operations.product_name,
         product_operations.unit_of_measure,
         product_operations.units_per_batch,
-        sum(product_operations.quantity) as unit_entries,
-        sum(product_operations.quantity)/sum(units_per_batch) as batch_quantity
+        sum(product_operations.quantity_in_unit) as unit_entries,
+        sum(product_operations.quantity_in_unit)/sum(units_per_batch) as batch_quantity
     from product_operations
     inner join collection_dates
         on product_operations.date_at = collection_dates.date_at

@@ -27,13 +27,15 @@ product_aggregate as (
         products.product_name,
         products.unit_of_measure,
         products.units_per_batch,
+        products.product_weight_kg,
         operations.operation_type,
         operations.flow_type,
-        sum(operations.quantity) as quantity
+        sum(operations.quantity) as quantity_in_unit,
+        sum(operations.quantity) * coalesce(products.product_weight_kg, 0) as quantity_in_kilo
     from operations
     inner join products
         on operations.product_id = products.product_id
-    group by 1,2,3,4,5,6,7
+    group by 1,2,3,4,5,6,7,8
 
 )
 
