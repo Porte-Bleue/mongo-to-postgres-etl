@@ -53,5 +53,7 @@ models:
         description: The type of stock operation, either `in` or `out`
       - name: flow_type
         description: The type of flow 
-      - name: quantity
+      - name: quantity_in_unit
         description: The quantity of product units associated with the operation 
+      - name: quantity_in_kilo
+        description: The corresponding weight, in kilograms, of the quantity of product units associated with the operation 

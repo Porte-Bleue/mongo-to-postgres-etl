@@ -5,12 +5,17 @@ models:
   - name: viz_food_bank_report__families__quarterly
     description: >
       Quarterly report on the total number of families helped and visits
-      during the time period.
+      over the period.
 
   - name: viz_food_bank_report__family_members__quarterly
     description: >
-      Quarterly report on the number of people helped during the time period
+      Quarterly report on the number of people helped over the period
       by age range and gender.
+
+  - name: viz_food_bank_report__volumes__quarterly
+    description: >
+      Quarterly report on the net weight distributed over the period,
+      including food bank, purchases and donations in kilograms and tonnes.
 
 exposures:
   - name: food-bank-report
@@ -27,3 +32,4 @@ exposures:
     depends_on:
       - ref('viz_food_bank_report__families__quarterly')
       - ref('viz_food_bank_report__family_members__quarterly')
+      - ref('viz_food_bank_report__volumes__quarterly')
