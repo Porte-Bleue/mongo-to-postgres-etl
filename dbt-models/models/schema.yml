@@ -136,6 +136,8 @@ models:
           eg: 'Paquet' for 'Biscuits'
       - name: units_per_batch
         description: Number of product units given per batch
+      - name: date_latest_collection
+        description: The date of the lastest collection
       - name: unit_entries
         description: The quantity of product units entered in stock
       - name: batch_quantity

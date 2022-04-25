@@ -17,6 +17,7 @@ operations_collection_dates as (
         product_operations.product_name,
         product_operations.unit_of_measure,
         product_operations.units_per_batch,
+        max(product_operations.date_at) over () as date_latest_collection,
         sum(product_operations.quantity_in_unit) as unit_entries,
         sum(product_operations.quantity_in_unit)/sum(units_per_batch) as batch_quantity
     from product_operations
