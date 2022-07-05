@@ -2,3 +2,4 @@
 ---
 packages:
   - git: "https://{{env_var('DBT_ENV_SECRET_GIT_CREDENTIAL')}}@github.com/dbt-labs/dbt-utils.git" # git HTTPS URL
+    revision: 0.8.6
