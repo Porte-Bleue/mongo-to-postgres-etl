@@ -31,7 +31,8 @@ product_aggregate as (
         operations.operation_type,
         operations.flow_type,
         sum(operations.quantity) as quantity_in_unit,
-        sum(operations.quantity) * coalesce(products.product_weight_kg, 0) as quantity_in_kilo
+        sum(operations.quantity) * coalesce(products.product_weight_kg, 0) as quantity_in_kilo,
+        sum(operations.quantity)/max(products.units_per_batch)::numeric as batch_quantity
     from operations
     inner join products
         on operations.product_id = products.product_id
