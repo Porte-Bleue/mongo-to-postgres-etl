@@ -17,12 +17,27 @@ models:
       Quarterly report on the net weight distributed over the period,
       including food bank, purchases and donations in kilograms and tonnes.
 
+  - name: viz_food_bank_report__families_yearly
+    description: >
+      Yearly report on the total number of families helped and visits
+      over the period.
+
+  - name: viz_food_bank_report__family_members__yearly
+    description: >
+      Yearly report on the number of people helped over the period
+      by age range and gender.
+
+  - name: viz_food_bank_report__volumes__yearly
+    description: >
+      Yearly report on the net weight distributed over the period,
+      including food bank, purchases and donations in kilograms and tonnes.
+
 exposures:
   - name: food-bank-report
     description: >-
       La Porte Bleue is required to declare its activities to the food bank by means of
-      a quarterly report containing key figures and information on the people helped 
-      as well as the volume of donations.
+      a quarterly and yearly report containing key figures and information on the people 
+      helped as well as the volume of donations.
     type: dashboard
     maturity: high
     owner:
@@ -33,3 +48,6 @@ exposures:
       - ref('viz_food_bank_report__families__quarterly')
       - ref('viz_food_bank_report__family_members__quarterly')
       - ref('viz_food_bank_report__volumes__quarterly')
+      - ref('viz_food_bank_report__families__yearly')
+      - ref('viz_food_bank_report__family_members__yearly')
+      - ref('viz_food_bank_report__volumes__yearly')
