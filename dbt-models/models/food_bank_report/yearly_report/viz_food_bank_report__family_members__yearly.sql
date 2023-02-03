@@ -4,12 +4,21 @@ with family_members__visit_events as (
 
 ),
 
+last_day_year as (
+
+    select
+        *,
+        (date_trunc('year', visit_date)::date + interval '1 year')::date-1 as visit_last_day_of_year
+    from family_members__visit_events
+
+),
+
 calculate_age as (
 
     select
         *,
-        date_part('year', age(visit_date, birth_date))::int as age
-    from family_members__visit_events
+        date_part('year', age(visit_last_day_of_year, birth_date))::int as age
+    from last_day_year
 
 ),
 
