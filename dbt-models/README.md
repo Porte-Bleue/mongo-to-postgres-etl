@@ -31,7 +31,7 @@ la_porte_bleue:
   outputs:
     prod:
       type: postgres
-      host: %%HOST%%
+      host: %%DB_HOST%%
       user: %%YOUR_USER%%
       password: %%YOUR_PW%%
       port: 5432
@@ -41,7 +41,7 @@ la_porte_bleue:
 
     dev:
       type: postgres
-      host: db.eddmcnfdgbktebjetyjd.supabase.co
+      host: %%DB_HOST%%
       user: %%YOUR_USER%%
       password: %%YOUR_PW%%
       port: 5432
