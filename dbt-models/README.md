@@ -1,11 +1,58 @@
-Welcome to your new dbt project!
+## Install dbt
 
-### Using the starter project
+```sh
+pip install dbt-postgres
+```
+
+### Clone dbt repo:
+```
+git clone https://github.com/marielestavel/mongo-to-postgres-etl.git
+```
+
+### Install dependencies 
+
+```sh
+export DBT_ENV_SECRET_GIT_CREDENTIAL=$GITHUB_TOKEN
+```
+
+### Check dbt version and update dbt dependencies
+```
+dbt --version
+dbt deps
+```
+
+### Configure dbt
+To be able to interact with the SQL database, the dbt profile should be configured. 
+Add the following configuration to your profiles.yml, keep in mind that you need to replace %%YOUR USER%% and %%YOUR_PW%% with your
+own credentials:
+```
+la_porte_bleue:
+  target: dev
+  outputs:
+    prod:
+      type: postgres
+      host: %%HOST%%
+      user: %%YOUR_USER%%
+      password: %%YOUR_PW%%
+      port: 5432
+      dbname: %%DB_NAME%%
+      schema: analytics
+      threads: 4
+
+    dev:
+      type: postgres
+      host: db.eddmcnfdgbktebjetyjd.supabase.co
+      user: %%YOUR_USER%%
+      password: %%YOUR_PW%%
+      port: 5432
+      dbname: %%DB_NAME%%
+      schema: dbt_<YOUR_NAME>
+      threads: 4
+```
+
 
 ```sh
 export DBT_PROFILES_DIR=$(pwd)
-dbt run
-dbt test
 ```
 
 ### Resources:
