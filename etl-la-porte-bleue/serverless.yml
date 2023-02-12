@@ -1,0 +1,22 @@
+org: mialesta
+app: etl-la-porte-bleue
+service: etl-la-porte-bleue
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  environment:
+    MONGO_DB: ${file(./serverless.env.yml):MONGO_DB, ''}
+    POSTGRES_DB: ${file(./serverless.env.yml):POSTGRES_DB, ''}
+    
+functions:
+  extract:
+    handler: handler.extract
+
+  load:
+    handler: handler.load
+
+plugins:
+  - serverless-python-requirements
