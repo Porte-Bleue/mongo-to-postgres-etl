@@ -4,28 +4,16 @@ with family_members__visit_events as (
 
 ),
 
-families_by_quarter as (
+metrics_by_quarter as (
 
     select
         date_trunc('quarter', visit_date)::date as quarter_at,
-        family_id,
-        count(visit_id) as visit_count
+        count(distinct visit_date) as distribution_count,
+        count(distinct family_id) as family_count,
+        count(distinct visit_id) as total_visits
     from family_members__visit_events
-    group by 1,2
-
-),
-
-grouped as (
-
-    select
-        quarter_at,
-        count(family_id) as family_count,
-        sum(visit_count) as visit_count
-    from families_by_quarter
     group by 1
 
 )
 
-select
-  *
-from grouped
+select * from metrics_by_quarter
