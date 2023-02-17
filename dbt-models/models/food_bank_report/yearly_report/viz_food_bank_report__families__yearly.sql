@@ -10,7 +10,8 @@ metrics_yearly as (
         date_trunc('year', visit_date)::date as year_at,
         count(distinct visit_date) as distribution_count,
         count(distinct family_id) as family_count,
-        count(distinct visit_id) as total_visits
+        count(distinct visit_id) as total_visits,
+        sum(number_of_operations) as total_product_distributed
     from family_members__visit_events
     group by 1
 

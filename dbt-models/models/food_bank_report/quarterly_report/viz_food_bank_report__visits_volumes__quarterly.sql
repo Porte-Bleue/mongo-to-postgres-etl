@@ -17,6 +17,7 @@ joined as (
         visits.distribution_count,
         visits.family_count,
         visits.total_visits,
+        visits.total_product_distributed,
         volumes.volumes_distributed_kilos
     from visits
     left join volumes
