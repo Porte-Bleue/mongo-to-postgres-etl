@@ -1,6 +1,6 @@
 org: mialesta
-app: la-porte-bleue
-service: etl
+app: etl-la-porte-bleue
+service: etl-la-porte-bleue
 
 frameworkVersion: '3'
 
@@ -21,8 +21,8 @@ provider:
   #       - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 
 functions:
-  cronHandler:
+  main:
     handler: handler.main
     events:
-      # Invoke Lambda function every 2nd minute from Mon-Fri
-      - schedule: cron(0 13 * * *)
+      # Invoke Lambda function everyday at 1pm CET
+      - schedule: cron(0 12 * * ? *)
