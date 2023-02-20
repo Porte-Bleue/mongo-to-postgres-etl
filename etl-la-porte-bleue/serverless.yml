@@ -1,20 +1,28 @@
-# org: mialesta
-app: etl-la-porte-bleue
-service: etl-la-porte-bleue
+org: mialesta
+app: la-porte-bleue
+service: etl
 
 frameworkVersion: '3'
 
+plugins:
+  - serverless-python-requirements
+
 provider:
   name: aws
-  runtime: python3.8
+  # TODO: python3.7 ?
+  runtime: python3.9
   environment:
     MONGO_DB: ${env:MONGO_DB}
     POSTGRES_DB: ${env:POSTGRES_DB}
+  # TODO: iam role?
+  # iam:
+  #   role:
+  #     managedPolicies:
+  #       - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 
 functions:
-  main:
+  cronHandler:
     handler: handler.main
-    # TODO: how do you want to trigger this? every day at 13:00
-
-plugins:
-  - serverless-python-requirements
+    events:
+      # Invoke Lambda function every 2nd minute from Mon-Fri
+      - schedule: cron(0 13 * * *)

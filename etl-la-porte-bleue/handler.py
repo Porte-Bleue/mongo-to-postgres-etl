@@ -21,7 +21,6 @@ def extract(mongodb_secret: str, collection_name: str):
 
     Ref: https://realpython.com/introduction-to-mongodb-and-python/
     """
-    print(mongodb_secret)
     client = pymongo.MongoClient(mongodb_secret)  # Connect to MongoDB instance
     db = client.porteBleue  # Access `porteBleue` database
     collection = db[collection_name]  # db.getCollection("products")
@@ -64,7 +63,8 @@ def load(postgre_secret: str, table_name: str):
         session.close()
 
 def main(event, context):
-    os.mkdir("data")
+    if not os.path.exists('data'):
+        os.makedirs('my_folder')
 
     # Load credentials
     mongodb_secret = os.environ.get("MONGO_DB")
