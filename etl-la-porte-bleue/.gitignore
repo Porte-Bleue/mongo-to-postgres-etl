@@ -18,3 +18,7 @@ var/
 
 # Serverless directories
 .serverless
+
+node_modules/
+
+serverless.env.yml

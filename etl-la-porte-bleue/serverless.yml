@@ -1,4 +1,4 @@
-org: mialesta
+# org: mialesta
 app: etl-la-porte-bleue
 service: etl-la-porte-bleue
 
@@ -8,15 +8,13 @@ provider:
   name: aws
   runtime: python3.8
   environment:
-    MONGO_DB: ${file(./serverless.env.yml):MONGO_DB, ''}
-    POSTGRES_DB: ${file(./serverless.env.yml):POSTGRES_DB, ''}
-    
-functions:
-  extract:
-    handler: handler.extract
+    MONGO_DB: ${env:MONGO_DB}
+    POSTGRES_DB: ${env:POSTGRES_DB}
 
-  load:
-    handler: handler.load
+functions:
+  main:
+    handler: handler.main
+    # TODO: how do you want to trigger this? every day at 13:00
 
 plugins:
   - serverless-python-requirements
