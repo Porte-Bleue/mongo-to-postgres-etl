@@ -1,5 +1,6 @@
+bson
 pymongo==3.11.2
-python-dotenv==0.19.2
 dnspython
 sqlmodel
-psycopg2
+psycopg2-binary
+sqlalchemy
