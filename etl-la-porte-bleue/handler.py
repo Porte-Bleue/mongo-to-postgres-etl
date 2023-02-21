@@ -25,7 +25,7 @@ def extract(mongodb_secret: str, collection_name: str):
     db = client.porteBleue  # Access `porteBleue` database
     collection = db[collection_name]  # db.getCollection("products")
 
-    with open(f"data/{collection_name}.jsonl", "w") as fh:
+    with open(f"/tmp/{collection_name}.jsonl", "w") as fh:
         if collection_name == "operations":
             fh.writelines(
                 [
@@ -53,7 +53,7 @@ def load(postgre_secret: str, table_name: str):
     connection.commit()  # Commit the transaction
     SQLModel.metadata.create_all(engine)
 
-    with open(f"data/{table_name}.jsonl", "r") as fh:
+    with open(f"/tmp/{table_name}.jsonl", "r") as fh:
         objects = [Class(id=i, **json.loads(p)) for i, p in enumerate(fh.readlines())]
 
     # TODO: instead of writing all objects, only do an incremental write
@@ -63,8 +63,8 @@ def load(postgre_secret: str, table_name: str):
         session.close()
 
 def main(event, context):
-    if not os.path.exists('data'):
-        os.makedirs('my_folder')
+    if not os.path.exists('/tmp'):
+        os.mkdtemp('/tmp')
 
     # Load credentials
     mongodb_secret = os.environ.get("MONGO_DB")

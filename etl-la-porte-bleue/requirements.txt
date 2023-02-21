@@ -2,5 +2,5 @@ bson
 pymongo==3.11.2
 dnspython
 sqlmodel
-psycopg2-binary
+aws-psycopg2
 sqlalchemy

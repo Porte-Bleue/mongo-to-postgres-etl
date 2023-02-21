@@ -23,6 +23,7 @@ provider:
 functions:
   main:
     handler: handler.main
+    timeout: 45
     events:
       # Invoke Lambda function everyday at 1pm CET
       - schedule: cron(0 12 * * ? *)
