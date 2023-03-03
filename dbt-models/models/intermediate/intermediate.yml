@@ -62,3 +62,21 @@ models:
           The corresponding quantity of product units in product batch.
           Eg: If diapers are given in batches of 10 to families, 
           then 10 unit entries correspond to 1 product batch stock entry.
+
+  - name: stg_operations__product_operations
+    description: >
+      Incremental model containing a daily snapshot of stock to date for each product 
+    columns:
+      - name: product_stock_id
+        description: The unique identifier for this table
+        tests:
+          - unique
+          - not_null
+      - name: date_at
+        description: The date of the snapshot
+      - name: product_id
+        description: The unique identifier for a product
+      - name: product_name
+        description: The name of the product
+      - name: stock_at_date
+        description: The stock to date of the product
