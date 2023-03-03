@@ -155,6 +155,10 @@ models:
         description: The theoretical average weight of a product unit
         tests:
           - not_null
+      - name: price_per_unit_eur
+        description: The theoretical average price of a product unit in euro
+        tests:
+          - not_null
 
   - name: stg_visit_events
     columns:
