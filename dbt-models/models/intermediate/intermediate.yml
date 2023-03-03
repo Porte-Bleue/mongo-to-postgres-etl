@@ -67,7 +67,7 @@ models:
           The corresponding monetary value of the products associated with the operation
           calculated based on the average price of a product unit.
 
-  - name: stg_operations__product_operations
+  - name: stg_products__stock_timeseries
     description: >
       Incremental model containing a daily snapshot of stock to date for each product 
     columns:
