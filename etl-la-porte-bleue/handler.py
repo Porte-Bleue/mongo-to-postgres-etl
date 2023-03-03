@@ -26,17 +26,7 @@ def extract(mongodb_secret: str, collection_name: str):
     collection = db[collection_name]  # db.getCollection("products")
 
     with open(f"/tmp/{collection_name}.jsonl", "w") as fh:
-        if collection_name == "operations":
-            fh.writelines(
-                [
-                    dumps(doc) + "\n"
-                    for doc in collection.find(
-                        {"createdAt": {"$gte": datetime.today() - timedelta(7)}}
-                    )
-                ]
-            )  # Limit the extract to last 7 days from the `operations` collection
-        else:
-            fh.writelines([dumps(doc) + "\n" for doc in collection.find()])
+        fh.writelines([dumps(doc) + "\n" for doc in collection.find()])
 
 
 def load(postgre_secret: str, table_name: str):

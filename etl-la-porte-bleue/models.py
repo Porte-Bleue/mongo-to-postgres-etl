@@ -23,6 +23,7 @@ class Products(SQLModel, table=True):
     updated_by: str
     current_stock: int
     weight_in_kg: Optional[float]
+    price_per_unit: Optional[float]
 
     # operations: List["Operations"] = Relationship(back_populates="product")
 
