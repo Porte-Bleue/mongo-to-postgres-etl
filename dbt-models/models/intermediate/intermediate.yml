@@ -62,6 +62,10 @@ models:
           The corresponding quantity of product units in product batch.
           Eg: If diapers are given in batches of 10 to families, 
           then 10 unit entries correspond to 1 product batch stock entry.
+      - name: monetary_value_eur
+        description: > 
+          The corresponding monetary value of the products associated with the operation
+          calculated based on the average price of a product unit.
 
   - name: stg_operations__product_operations
     description: >

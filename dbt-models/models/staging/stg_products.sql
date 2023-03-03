@@ -18,7 +18,7 @@ renamed as (
         category as category_id,
         current_stock,
         nullif(weight_in_kg, 'NaN')::numeric as product_weight_kg,
-        price_per_unit
+        price_per_unit as price_per_unit_eur
     from source
 
 )
