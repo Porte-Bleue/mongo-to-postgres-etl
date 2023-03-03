@@ -28,15 +28,17 @@ product_aggregate as (
         products.unit_of_measure,
         products.units_per_batch,
         products.product_weight_kg,
+        products.price_per_unit_eur,
         operations.operation_type,
         operations.flow_type,
         sum(operations.quantity) as quantity_in_unit,
         sum(operations.quantity) * coalesce(products.product_weight_kg, 0) as quantity_in_kilo,
-        sum(operations.quantity)/max(products.units_per_batch)::numeric as batch_quantity
+        sum(operations.quantity)/max(products.units_per_batch)::numeric as batch_quantity,
+        sum(operations.quantity) * price_per_unit_eur as monetary_value_eur
     from operations
     inner join products
         on operations.product_id = products.product_id
-    group by 1,2,3,4,5,6,7,8
+    group by 1,2,3,4,5,6,7,8,9
 
 )
 

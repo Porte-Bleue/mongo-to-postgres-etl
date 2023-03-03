@@ -19,7 +19,8 @@ operations_collection_dates as (
         product_operations.units_per_batch,
         max(product_operations.date_at) over () as date_latest_collection,
         sum(product_operations.quantity_in_unit) as unit_entries,
-        sum(batch_quantity) as batch_quantity
+        sum(batch_quantity) as batch_quantity,
+        sum(monetary_value_eur) as monetary_value_eur
     from product_operations
     inner join collection_dates
         on product_operations.date_at = collection_dates.date_at
