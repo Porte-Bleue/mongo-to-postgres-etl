@@ -18,7 +18,8 @@ joined as (
         visits.family_count,
         visits.total_visits,
         visits.total_product_distributed,
-        volumes.volumes_distributed_kilos
+        volumes.volumes_distributed_kilos,
+        volumes.total_monetary_value_eur
     from visits
     left join volumes
         on visits.quarter_at = volumes.quarter_at

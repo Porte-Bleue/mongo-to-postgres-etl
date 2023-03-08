@@ -9,7 +9,8 @@ volumes_distributed_yearly as (
     select
         date_trunc('year', date_at)::date as year_at,
         sum(quantity_in_kilo) as volumes_distributed_kilos,
-        sum(quantity_in_kilo)/1000 as volumes_distributed_tonnes
+        sum(quantity_in_kilo)/1000 as volumes_distributed_tonnes,
+        sum(monetary_value_eur) as total_monetary_value_eur
     from product_operations
     where operation_type = 'out'
     and flow_type = 'family-order'

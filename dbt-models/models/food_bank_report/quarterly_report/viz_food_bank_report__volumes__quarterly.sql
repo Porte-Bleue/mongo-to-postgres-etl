@@ -9,7 +9,8 @@ volumes_distributed_by_quarter as (
     select
         date_trunc('quarter', date_at)::date as quarter_at,
         sum(quantity_in_kilo) as volumes_distributed_kilos,
-        sum(quantity_in_kilo)/1000 as volumes_distributed_tonnes
+        sum(quantity_in_kilo)/1000 as volumes_distributed_tonnes,
+        sum(monetary_value_eur) as total_monetary_value_eur
     from product_operations
     where operation_type = 'out'
     and flow_type = 'family-order'
