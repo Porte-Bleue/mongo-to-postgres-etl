@@ -8,3 +8,11 @@ seeds:
     columns:
       - name: date_at
         description: Date of the collection
+
+  - name: seed_grocery_shopping_dates
+    description: >
+      This table contains past and future dates when La Porte Bleue team 
+      went grocery shopping for products to distribute
+    columns:
+      - name: date_at
+        description: Shopping date

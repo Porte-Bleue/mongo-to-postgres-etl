@@ -149,3 +149,30 @@ models:
         description: > 
           The corresponding monetary value in euro of the products brought into stock
           calculated based on the average price of a product unit.
+
+  - name: viz_operations__stock_entries_shopping_dates
+    description: Model containing stock entries by product on grocery shopping days
+    columns:
+      - name: date_at
+        description: The date when the operation occurred
+      - name: product_name
+        description: The name of the product
+      - name: unit_of_measure
+        description: >
+          Unit of measure for a given product
+          eg: 'Paquet' for 'Biscuits'
+      - name: units_per_batch
+        description: Number of product units given per batch
+      - name: date_latest_shopping
+        description: The date of the lastest grocery shopping
+      - name: unit_entries
+        description: The quantity of product units entered in stock
+      - name: batch_quantity
+        description: > 
+          The corresponding quantity of product units in product batch.
+          Eg: If diapers are given in batches of 10 to families, 
+          then 10 unit entries correspond to 1 product batch stock entry.
+      - name: monetary_value_eur
+        description: > 
+          The corresponding monetary value in euro of the products brought into stock
+          calculated based on the average price of a product unit.
