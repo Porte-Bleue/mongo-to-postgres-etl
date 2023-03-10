@@ -22,7 +22,7 @@ models:
       Quarterly report combining visit metrics (number of distribution, visits etc)
       with volume metrics (net weight distributed) over the period.
 
-  - name: viz_food_bank_report__families_yearly
+  - name: viz_food_bank_report__families__yearly
     description: >
       Yearly report on the total number of families helped and visits
       over the period.
