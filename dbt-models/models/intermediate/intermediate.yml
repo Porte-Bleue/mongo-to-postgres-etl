@@ -84,3 +84,20 @@ models:
         description: The name of the product
       - name: stock_at_date
         description: The stock to date of the product
+
+  - name: stg_products__distribution_metrics
+    description: >
+      Model containing moving average metrics for product distributions based on the last 4 distributions  
+    columns:
+      - name: date_at
+        description: The distribution date
+      - name: product_id
+        description: The unique identifier for a product
+      - name: product_name
+        description: The name of the product
+      - name: quantity_distributed_moving_average_last_4_distributions
+        description: the average quantity of products distributed per distribution based on the last 4 distributions
+      - name: visits_moving_average_last_4_distributions
+        description: the average number of visits per distribution based on the last 4 distributions
+      - name: average_quantity_per_family
+        description: the average amount distributed per family over a distribution based on the last 4 distributions
