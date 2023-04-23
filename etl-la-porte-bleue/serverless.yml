@@ -26,4 +26,4 @@ functions:
     timeout: 360
     events:
       # Invoke Lambda function everyday at 1pm CET
-      - schedule: cron(0 12 * * ? *)
+      - schedule: cron(0 11 * * ? *)
