@@ -176,3 +176,5 @@ models:
         description: >
           The theoretical number of distributions where the product would be available in stock 
           based on the stock to date and the average quantity distributed per distribution
+      - name: date_latest_distribution
+        description: The date of the lastest distribution
