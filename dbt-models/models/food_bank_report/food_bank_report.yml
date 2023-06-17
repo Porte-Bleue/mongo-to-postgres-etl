@@ -42,6 +42,11 @@ models:
       Yearly report combining visit metrics (number of distribution, visits etc)
       with volume metrics (net weight distributed) over the period.
 
+  - name: viz_food_bank_report__count_members__quarterly
+    description: >
+      Quarterly report on the distribution of the number of family members
+      among the unique number of families visiting over the period.
+
 exposures:
   - name: food-bank-report
     description: >-
@@ -63,4 +68,5 @@ exposures:
       - ref('viz_food_bank_report__family_members__yearly')
       - ref('viz_food_bank_report__volumes__yearly')
       - ref('viz_food_bank_report__visits_volumes__yearly')
+      - ref('viz_food_bank_report__count_members__quarterly')
       
