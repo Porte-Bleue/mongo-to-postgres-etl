@@ -11,6 +11,7 @@ sources:
       - name: products
       - name: visit_events
       - name: operations
+      - name: collects
 
 models:
   - name: stg_families
@@ -223,5 +224,39 @@ models:
           - not_null
       - name: update_date
         description: The date when the product was updated
+        tests:
+          - not_null
+
+  - name: stg_collects
+    columns:
+      - name: collect_id
+        description: The unique identifier for a collection
+        tests:
+          - unique
+          - not_null
+      - name: collect_type
+        description: The type of collect, either `collect`, `xxx` or `xxx`
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['collect', 'xxx', 'xxx']
+      - name: date_at
+        description: The date when the collect occurred
+        tests:
+          - not_null
+      - name: created_at
+        description: Timestamp when the xxx was created
+        tests:
+          - not_null
+      - name: updated_at
+        description: Timestamp when the xxx was updated
+        tests:
+          - not_null
+      - name: created_by
+        description: identifier of the 
+        tests:
+          - not_null
+      - name: updated_by
+        description: identifier of the 
         tests:
           - not_null
