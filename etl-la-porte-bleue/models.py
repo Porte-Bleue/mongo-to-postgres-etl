@@ -143,3 +143,24 @@ class Operations(SQLModel, table=True):
         alias_generator = to_camel
         allow_population_by_field_name = True
 
+class Collects(SQLModel, table=True):
+    collect_id: str = Field(default=None, primary_key=True, alias='_id')
+    collect_type: str = Field(alias='type')
+    date_at: str = Field(alias='Date')
+    title: str = Field(alias='Titre')
+    created_at: datetime
+    updated_at: datetime
+    created_by: str
+    updated_by: str
+
+    @validator("collect_id", "created_by", "updated_by", pre=True)
+    def unnest_id(cls, v):
+        return v["$oid"]
+
+    @validator("created_at", "updated_at", pre=True)
+    def unnest_date(cls, v):
+        return v["$date"]
+
+    class Config:
+        alias_generator = to_camel
+        allow_population_by_field_name = True
