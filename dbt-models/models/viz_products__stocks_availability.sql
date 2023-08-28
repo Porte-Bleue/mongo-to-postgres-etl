@@ -21,7 +21,7 @@ joined as (
         distribution_metrics.average_quantity_per_family,
         stocks.stock_at_date,
         -- To improve the model, `visits_moving_average_last_4_distributions` should be replaced by a prediction of the upcoming number of visits
-        round(case when stock_at_date > 0 then stock_at_date/(average_quantity_per_family*visits_moving_average_last_4_distributions) else 0 end, 2) as count_distributions_available,
+        round(case when average_quantity_per_family*visits_moving_average_last_4_distributions > 0 then stock_at_date/(average_quantity_per_family*visits_moving_average_last_4_distributions) else 0 end, 2) as count_distributions_available,
         max(distribution_metrics.date_at) over () as date_latest_distribution
     from distribution_metrics
     inner join stocks
