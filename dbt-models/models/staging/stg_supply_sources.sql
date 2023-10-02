@@ -7,7 +7,7 @@ with source as (
 renamed as (
 
     select
-        collect_id as source_id,
+        collect_id as supply_id,
         collect_type as source_name,
         date_at::date,
         title,
