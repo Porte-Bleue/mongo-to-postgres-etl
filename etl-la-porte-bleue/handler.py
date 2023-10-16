@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 import pymongo
 import sqlalchemy
 from sqlmodel import Session, SQLModel, create_engine
-from models import Products, Families, FamilyMembers, VisitEvents, Operations
+from models import Products, Families, FamilyMembers, VisitEvents, Operations, Collects
 
 orm_classes = {
     "products": Products,
@@ -14,6 +14,7 @@ orm_classes = {
     "family_members": FamilyMembers,
     "visit_events": VisitEvents,
     "operations": Operations,
+    "collects": Collects,
 }
 
 def extract(mongodb_secret: str, collection_name: str):
@@ -66,6 +67,7 @@ def main(event, context):
         "family_members",
         "visit_events",
         "operations",
+        "collects",
     ]
 
     for t in tables_to_extract:

@@ -11,6 +11,7 @@ sources:
       - name: products
       - name: visit_events
       - name: operations
+      - name: collects
 
 models:
   - name: stg_families
@@ -223,5 +224,43 @@ models:
           - not_null
       - name: update_date
         description: The date when the product was updated
+        tests:
+          - not_null
+
+  - name: stg_supply_sources
+    columns:
+      - name: supply_id
+        description: The unique identifier for a supply entry
+        tests:
+          - unique
+          - not_null
+      - name: source_name
+        description: The name of the source, either `Collectes Supermarché`, `Pleins Courses` or `Enlèvements BAPIF`
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Collectes Supermarché', 'Pleins Courses', 'Enlèvements BAPIF']
+      - name: date_at
+        description: The date when the collect occurred
+        tests:
+          - not_null
+      - name: title
+        description: The title of the supply entry
+        tests:
+          - not_null
+      - name: created_at
+        description: Timestamp when the supply entry was created
+        tests:
+          - not_null
+      - name: updated_at
+        description: Timestamp when the supply entry was updated
+        tests:
+          - not_null
+      - name: created_by
+        description: identifier of the member having completed the stock entry into the app
+        tests:
+          - not_null
+      - name: updated_by
+        description: identifier of the member having updated the stock entry into the app
         tests:
           - not_null
