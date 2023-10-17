@@ -8,7 +8,10 @@ renamed as (
 
     select
         collect_id as supply_id,
-        collect_type as source_name,
+        case
+            when collect_type = 'collect' then 'Collectes Supermarché'
+            else collect_type
+        end as source_name,
         date_at::date,
         title,
         created_at,
