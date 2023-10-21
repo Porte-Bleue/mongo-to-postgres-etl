@@ -128,7 +128,7 @@ models:
     columns:
       - name: date_at
         description: The date when the operation occurred
-      - name: source
+      - name: source_name
         description: > 
           The acquisition channel for this operation.
           Either 'Pleins Courses', 'Collectes Supermarché' or 'Enlèvements BAPIF'
