@@ -66,6 +66,7 @@ final as (
     from quarter_sources_cross_join
     left join supply_sources_aggregate
         on quarter_sources_cross_join.quarter_at = supply_sources_aggregate.quarter_at
+        and quarter_sources_cross_join.source_name = supply_sources_aggregate.source_name
 
 )
 
