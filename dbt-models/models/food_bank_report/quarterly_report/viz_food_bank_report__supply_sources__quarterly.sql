@@ -30,6 +30,9 @@ distinct_supply_source as (
 
 quarter_sources_cross_join as (
 
+-- Create a cross join between quarters and distinct supply sources
+-- to ensure all combinations are represented, even if there is no data for a specific source in a quarter.
+    
     select
         quarters_calendar.quarter_at,
         distinct_supply_source.source_name
@@ -51,6 +54,9 @@ supply_sources_aggregate as (
 ),
 
 final as (
+
+-- Create the final dataset that includes all quarters and supply sources,
+-- filling in missing data with 0 
 
     select
         quarter_sources_cross_join.quarter_at,
