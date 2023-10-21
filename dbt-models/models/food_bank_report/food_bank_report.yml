@@ -47,6 +47,11 @@ models:
       Quarterly report on the distribution of the number of family members
       among the unique number of families visiting over the period.
 
+  - name: viz_food_bank_report__supply_sources__quarterly
+    description: >
+      Quarterly report including stock metrics related to product entries 
+      from the various supply sources.
+
 exposures:
   - name: food-bank-report
     description: >-
