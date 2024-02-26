@@ -10,6 +10,8 @@ renamed as (
         collect_id as supply_id,
         case
             when collect_type = 'collect' then 'Collectes Supermarché'
+            when collect_type = 'shopping' then 'Pleins Courses'
+            when collect_type = 'BAPIF' then 'Enlèvements BAPIF'
             else collect_type
         end as source_name,
         date_at::date,
