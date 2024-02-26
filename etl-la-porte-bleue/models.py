@@ -1,14 +1,15 @@
 from typing import Optional, List
 from pydantic import validator
-from sqlmodel import Field, SQLModel, Relationship
+from sqlalchemy import ARRAY, String
+from sqlmodel import Field, SQLModel
 from datetime import datetime
+
 
 
 def to_camel(name):
     return "".join(
         x.capitalize() if i > 0 else x for i, x in enumerate(name.split("_"))
     )
-
 
 class Products(SQLModel, table=True):
     product_id: str = Field(default=None, primary_key=True, alias='_id')
@@ -17,10 +18,10 @@ class Products(SQLModel, table=True):
     quantity_for_one_foodstuff: int
     created_at: datetime
     updated_at: datetime
-    created_by: str
+    created_by: str = Field(alias='created_by')
     category: str
     cupboard: str
-    updated_by: str
+    updated_by: str = Field(alias='updated_by')
     current_stock: int
     weight_in_kg: Optional[float]
     price_per_unit: Optional[float]
@@ -37,11 +38,11 @@ class Products(SQLModel, table=True):
 
     class Config:
         alias_generator = to_camel
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 class Families(SQLModel, table=True):
     family_id: str = Field(default=None, primary_key=True, alias='_id')
-    family_members_ids: List[str] = Field(alias='familyMembers')
+    family_members_ids: List[str] = Field(sa_type=ARRAY(String), default=[], alias='familyMembers')
     name: str
     city: str
     housing_details: Optional[str]
@@ -67,7 +68,7 @@ class Families(SQLModel, table=True):
 
     class Config:
         alias_generator = to_camel
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 class FamilyMembers(SQLModel, table=True):
 
@@ -91,14 +92,14 @@ class FamilyMembers(SQLModel, table=True):
 
     class Config:
         alias_generator = to_camel
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 class VisitEvents(SQLModel, table=True):
 
     __tablename__: str = "visit_events"
 
     visit_id: str = Field(default=None, primary_key=True, alias='_id')
-    operation_ids: List[str] = Field(alias='operations')
+    operation_ids: List[str] = Field(sa_type=ARRAY(String), default=[], alias='operations')
     family_id: str = Field(alias='family')
     created_at: datetime
     updated_at: datetime
@@ -117,7 +118,7 @@ class VisitEvents(SQLModel, table=True):
 
     class Config:
         alias_generator = to_camel
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 class Operations(SQLModel, table=True):
     operation_id: str = Field(default=None, primary_key=True, alias='_id')
@@ -141,7 +142,7 @@ class Operations(SQLModel, table=True):
 
     class Config:
         alias_generator = to_camel
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 class Collects(SQLModel, table=True):
     collect_id: str = Field(default=None, primary_key=True, alias='_id')
@@ -150,8 +151,8 @@ class Collects(SQLModel, table=True):
     title: str = Field(alias='Titre')
     created_at: datetime
     updated_at: datetime
-    created_by: str
-    updated_by: str
+    created_by: str = Field(alias='created_by')
+    updated_by: str = Field(alias='updated_by')
 
     @validator("collect_id", "created_by", "updated_by", pre=True)
     def unnest_id(cls, v):
@@ -163,4 +164,4 @@ class Collects(SQLModel, table=True):
 
     class Config:
         alias_generator = to_camel
-        allow_population_by_field_name = True
+        populate_by_name = True

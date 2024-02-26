@@ -49,6 +49,7 @@ def load(postgre_secret: str, table_name: str):
 
     # TODO: instead of writing all objects, only do an incremental write
     with Session(engine) as session:
+        # print("Objects to be added to the session:", objects)
         session.add_all(objects)
         session.commit()
         session.close()
