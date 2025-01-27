@@ -7,10 +7,21 @@
     })
 }}
 
-with operations as (
+with last_run as (
+
+    select
+        max(created_at) as max_created_at
+    from {{ ref('stg_operations') }}
+    
+),
+
+operations as (
 
     select * from {{ ref('stg_operations') }}
-
+    {% if is_incremental() %}
+    where (created_at >= (select max_created_at from last_run)
+    or updated_at > created_at)
+    {% endif %}
 ),
 
 products as (
