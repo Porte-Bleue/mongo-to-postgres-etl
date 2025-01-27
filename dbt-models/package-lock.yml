@@ -1,0 +1,4 @@
+packages:
+  - git: https://{{env_var('DBT_ENV_SECRET_GIT_CREDENTIAL')}}@github.com/dbt-labs/dbt-utils.git
+    revision: ac072a3c4b78d43a1c013e7de8b8fa6e290b544e
+sha1_hash: d240f89ddc69e50cee964d41a7728683c29731e8
