@@ -27,22 +27,47 @@ def extract(mongodb_secret: str, collection_name: str):
     collection = db[collection_name]  # db.getCollection("products")
 
     with open(f"/tmp/{collection_name}.jsonl", "w") as fh:
-        fh.writelines([dumps(doc) + "\n" for doc in collection.find()])
+        if collection_name == 'operations':
+            # Filter operations from last 6 months
+            six_months_ago = datetime.today() - timedelta(days=180)
+            cursor = collection.find({"createdAt": {"$gte": six_months_ago}})
+        else:
+            cursor = collection.find()
+            
+        fh.writelines([dumps(doc) + "\n" for doc in cursor])
 
 
 def load(postgre_secret: str, table_name: str):
     """Load data from local JSONLine file to PostgresSQL."""
+
     engine = create_engine(
-        postgre_secret
+        postgre_secret,
+        connect_args={
+            "sslmode": "require",
+            "gssencmode": "disable",
+            "connect_timeout": 30,            
+            "application_name": "etl_production"
+        }
     )  # Create engine to connect to Postgre database
     Class = orm_classes[table_name]
     connection = engine.connect()  # Connect to the database
-    sql_query = sqlalchemy.text(
-        f"drop table if exists {table_name} cascade;"
-    )  # Transaction to drop the table and its dependent objects.
-    connection.execute(sql_query)  # Execute transaction
-    connection.commit()  # Commit the transaction
+
+    # Set the statement_timeout (in milliseconds) using an SQL query
+    statement_timeout = 300000  # 5 minutes in milliseconds
+    query_statement_timeout = sqlalchemy.text(
+        f"SET statement_timeout = {statement_timeout};"
+    )
+    connection.execute(query_statement_timeout)  # Set the statement_timeout
+
+    # Create the tables if they don't exist
     SQLModel.metadata.create_all(engine)
+
+    # Truncate the table and its dependent objects (to remove all data but keep structure)
+    truncate_query = sqlalchemy.text(
+        f"TRUNCATE TABLE {table_name} CASCADE;"
+    )
+    connection.execute(truncate_query)
+    connection.commit()
 
     with open(f"/tmp/{table_name}.jsonl", "r") as fh:
         objects = [Class(id=i, **json.loads(p)) for i, p in enumerate(fh.readlines())]
