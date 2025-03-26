@@ -4,6 +4,10 @@ config-version: 2
 
 profile: 'la_porte_bleue'
 
+# Set the statement_timeout (in milliseconds)
+vars:
+  statement_timeout: 600000  # 10 minutes in milliseconds
+
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
 # found in the "models/" directory. You probably won't need to change these!
