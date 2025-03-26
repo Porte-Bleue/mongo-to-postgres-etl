@@ -10,8 +10,8 @@
 with last_run as (
 
     select
-        max(created_at) as max_created_at
-    from {{ ref('stg_operations') }}
+        max(date_at) as max_date_at
+    from {{ this }}
     
 ),
 
@@ -25,7 +25,7 @@ operations as (
         creation_date
     from {{ ref('stg_operations') }}
     {% if is_incremental() %}
-    where (created_at >= (select max_created_at from last_run)
+    where (creation_date >= (select max_date_at from last_run)
     or updated_at > created_at)
     {% endif %}
 ),
