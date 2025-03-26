@@ -17,7 +17,13 @@ with last_run as (
 
 operations as (
 
-    select * from {{ ref('stg_operations') }}
+    select
+        product_id, 
+        operation_type, 
+        flow_type, 
+        quantity, 
+        creation_date
+    from {{ ref('stg_operations') }}
     {% if is_incremental() %}
     where (created_at >= (select max_created_at from last_run)
     or updated_at > created_at)
@@ -26,7 +32,14 @@ operations as (
 
 products as (
 
-    select * from {{ ref('stg_products') }}
+    select
+        product_id, 
+        product_name, 
+        unit_of_measure, 
+        units_per_batch, 
+        product_weight_kg, 
+        price_per_unit_eur
+    from {{ ref('stg_products') }}
 
 ),
 
@@ -45,7 +58,7 @@ product_aggregate as (
         sum(operations.quantity) as quantity_in_unit,
         sum(operations.quantity) * coalesce(products.product_weight_kg, 0) as quantity_in_kilo,
         sum(operations.quantity)/max(products.units_per_batch)::numeric as batch_quantity,
-        sum(operations.quantity) * price_per_unit_eur as monetary_value_eur
+        sum(operations.quantity) * products.price_per_unit_eur as monetary_value_eur
     from operations
     inner join products
         on operations.product_id = products.product_id
