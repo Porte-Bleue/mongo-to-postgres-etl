@@ -6,3 +6,4 @@ aws-psycopg2
 sqlalchemy
 pydantic==1.10.14
 pydantic-core
+python-dotenv
